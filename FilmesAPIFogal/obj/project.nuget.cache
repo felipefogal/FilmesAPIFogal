@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "jqXLhC9JW7E9agw0+WDQKTfK9I2nE65dR82u5f5nnxZqboOq/QvPzID5DIpGWab6a+8MztuPxPn99syJ0GsPqg==",
+  "dgSpecHash": "TNpIHpRwKGz+L/iMYYTlAt1694h/12bXGzGVPui0G6tkpiTYBbxvga2map3XSXntBfROYHlfjiKz5W9CfifY7A==",
   "success": true,
   "projectFilePath": "C:\\workspace\\aula_csharp_vs\\Alura\\FilmesAPIFogal\\FilmesAPIFogal\\FilmesAPIFogal.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\89910\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\89910\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\google.protobuf\\3.14.0\\google.protobuf.3.14.0.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
@@ -43,6 +45,7 @@
     "C:\\Users\\89910\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.1\\system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\89910\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\89910\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\system.security.cryptography.protecteddata.4.4.0.nupkg.sha512",
