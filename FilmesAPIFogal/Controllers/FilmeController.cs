@@ -1,4 +1,5 @@
 ﻿using FilmesAPIFogal.Data;
+using FilmesAPIFogal.Data.Dtos;
 using FilmesAPIFogal.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,29 +21,86 @@ namespace FilmesAPIFogal.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public IActionResult AdicionarFilme(Filme filme)
-        {
-            _context.Filmes.Add(filme);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(RecuperaFilmesPorId), new { Id = filme.Id }, filme);
-        }
-
         [HttpGet]
-        public IActionResult RecuperarFilmes()
+        public IEnumerable<Filme> RecuperarFilmes()
         {
-            return Ok(_context.Filmes);
+            return _context.Filmes;
         }
 
         [HttpGet("{id}")]
         public IActionResult RecuperaFilmesPorId(int id)
         {
             var retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-            if(retornoFilme != null)
+            if (retornoFilme != null)
             {
-                return Ok(retornoFilme); 
+                ReadFilmeDto filmeDto = new ReadFilmeDto
+                {
+                    Id = retornoFilme.Id,
+                    Titulo = retornoFilme.Titulo,
+                    Diretor = retornoFilme.Diretor,
+                    Genero = retornoFilme.Genero,
+                    Duracao = retornoFilme.Duracao,
+                    HoraDaConsulta = DateTime.Now
+                };
+                return Ok(filmeDto);
             }
             return NotFound();
         }
+
+        [HttpPost]
+        public IActionResult AdicionarFilme([FromBody] CreateFilmeDto filmeDto)
+        {
+            Filme filme = new Filme
+            {
+                Titulo = filmeDto.Titulo,
+                Genero = filmeDto.Genero,
+                Duracao = filmeDto.Duracao,
+                Diretor = filmeDto.Diretor
+            };
+
+            _context.Filmes.Add(filme);
+            _context.SaveChanges();
+            return CreatedAtAction(nameof(RecuperaFilmesPorId), new { Id = filme.Id }, filme);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult AtualizaFilmePorId(int id, [FromBody] UpdateFilmeDto filmeDto)
+        {
+            var retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            if(retornoFilme == null)
+            {
+                return NotFound();
+            }
+            retornoFilme.Titulo = filmeDto.Titulo;
+            retornoFilme.Diretor = filmeDto.Diretor;
+            retornoFilme.Genero = filmeDto.Genero;
+            retornoFilme.Duracao = filmeDto.Duracao;
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult ApagaFilmePorId(int id)
+        {
+            var retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            if (retornoFilme == null)
+            {
+                return NotFound();
+            }
+
+            _context.Filmes.Remove(retornoFilme);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        //private IActionResult RetornaFilmes(int id)
+        //{
+        //    Filme retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        //    if (retornoFilme == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(retornoFilme);
+        //}
     }
 }
