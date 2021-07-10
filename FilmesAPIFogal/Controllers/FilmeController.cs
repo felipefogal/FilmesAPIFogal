@@ -1,4 +1,5 @@
-﻿using FilmesAPIFogal.Data;
+﻿using AutoMapper;
+using FilmesAPIFogal.Data;
 using FilmesAPIFogal.Data.Dtos;
 using FilmesAPIFogal.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +16,12 @@ namespace FilmesAPIFogal.Controllers
     {
 
         private FilmeContext _context;
+        private IMapper _mapper;
 
-        public FilmeController(FilmeContext context)
+        public FilmeController(FilmeContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,15 +36,7 @@ namespace FilmesAPIFogal.Controllers
             var retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
             if (retornoFilme != null)
             {
-                ReadFilmeDto filmeDto = new ReadFilmeDto
-                {
-                    Id = retornoFilme.Id,
-                    Titulo = retornoFilme.Titulo,
-                    Diretor = retornoFilme.Diretor,
-                    Genero = retornoFilme.Genero,
-                    Duracao = retornoFilme.Duracao,
-                    HoraDaConsulta = DateTime.Now
-                };
+                ReadFilmeDto filmeDto = _mapper.Map<ReadFilmeDto>(retornoFilme);
                 return Ok(filmeDto);
             }
             return NotFound();
@@ -50,13 +45,7 @@ namespace FilmesAPIFogal.Controllers
         [HttpPost]
         public IActionResult AdicionarFilme([FromBody] CreateFilmeDto filmeDto)
         {
-            Filme filme = new Filme
-            {
-                Titulo = filmeDto.Titulo,
-                Genero = filmeDto.Genero,
-                Duracao = filmeDto.Duracao,
-                Diretor = filmeDto.Diretor
-            };
+            Filme filme = _mapper.Map<Filme>(filmeDto);
 
             _context.Filmes.Add(filme);
             _context.SaveChanges();
@@ -71,10 +60,7 @@ namespace FilmesAPIFogal.Controllers
             {
                 return NotFound();
             }
-            retornoFilme.Titulo = filmeDto.Titulo;
-            retornoFilme.Diretor = filmeDto.Diretor;
-            retornoFilme.Genero = filmeDto.Genero;
-            retornoFilme.Duracao = filmeDto.Duracao;
+            _mapper.Map(filmeDto, retornoFilme);
             _context.SaveChanges();
             return NoContent();
         }
@@ -88,19 +74,9 @@ namespace FilmesAPIFogal.Controllers
                 return NotFound();
             }
 
-            _context.Filmes.Remove(retornoFilme);
+            _context.Remove(retornoFilme);
             _context.SaveChanges();
             return NoContent();
         }
-
-        //private IActionResult RetornaFilmes(int id)
-        //{
-        //    Filme retornoFilme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
-        //    if (retornoFilme == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(retornoFilme);
-        //}
     }
 }
